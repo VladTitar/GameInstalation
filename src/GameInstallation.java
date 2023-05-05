@@ -20,13 +20,14 @@ public class GameInstallation {
         add(GAMES_DIRECTORY + "/res/vectors");
         add(GAMES_DIRECTORY + "/res/icons");
     }};
+
     private static final ArrayList<String> FILES_TO_CREATE = new ArrayList<>() {{
         add(GAMES_DIRECTORY + "/src/main/Main.java");
         add(GAMES_DIRECTORY + "/src/main/Utils.java");
         add(GAMES_DIRECTORY + "/temp/temp.txt");
     }};
 
-    private static final StringBuilder log = new StringBuilder(); // строка для логирования
+    private static final StringBuilder logBuilder = new StringBuilder(); // строка для логирования
 
     public static void main(String[] args) {
         createDirectories();
@@ -38,9 +39,9 @@ public class GameInstallation {
         for (String dir : DIRECTORIES_TO_CREATE) {
             File directory = new File(dir);
             if (directory.mkdir()) {
-                log.append("Папка успешно создана: ").append(dir).append("\n");
+                logBuilder.append("Папка успешно создана: ").append(dir).append("\n");
             } else {
-                log.append("Не удалось создать папку: ").append(dir).append("\n");
+                logBuilder.append("Не удалось создать папку: ").append(dir).append("\n");
             }
         }
     }
@@ -50,19 +51,19 @@ public class GameInstallation {
             File file = new File(files);
             try {
                 if (file.createNewFile()) {
-                    log.append("Файл успешно создан: ").append(files).append("\n");
+                    logBuilder.append("Файл успешно создан: ").append(files).append("\n");
                 } else {
-                    log.append("Не удалось создать файл: ").append(files).append("\n");
+                    logBuilder.append("Не удалось создать файл: ").append(files).append("\n");
                 }
             } catch (IOException e) {
-                log.append("Не удалось создать файл: ").append(files).append(". Ошибка: ").append(e.getMessage()).append("\n");
+                logBuilder.append("Не удалось создать файл: ").append(files).append(". Ошибка: ").append(e.getMessage()).append("\n");
             }
         }
     }
 
     private static void writeLogToFile() {
         try (FileWriter writer = new FileWriter(LOG_FILE)) {
-            writer.write(log.toString());
+            writer.write(logBuilder.toString());
             System.out.println("Лог успешно записан в файл: " + LOG_FILE);
         } catch (IOException e) {
             System.out.println("Не удалось записать лог в файл: " + LOG_FILE + ". Ошибка: " + e.getMessage());
